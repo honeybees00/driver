@@ -69,23 +69,42 @@ def update_driver(id):
     #  delete opperation
 @drivers.route("/<int:id>",methods=["Delete"])
 def delete_driver(id):
-try:
+    try:
         conn=get_connection()
         cur=conn.cursor()
         cur.execute("""
         delete from driver
          where driver_id=%s
-conn.commit()
-cur.close()
-conn.close()
+                    """)
+        conn.commit()
+        cur.close()
+        conn.close()
     except Exception as e:
-    return jsonify({"message":f"an error occurred {e}"})  
- else:
-        return jsonify({"message":"object updated"}),201
+     return jsonify({"message":f"an error occurred {e}"})  
+    else:
+     return jsonify({"message":"object updated"}),201
      #  delete opperation
 @drivers.route("/<int:id>",methods=["Delete"])
-    def delete_driver(id):
-                    """)
+def delete_driver(id):
+    
+   try:
+      conn= get_connection()
+      cur=conn.cursor()
+      cur.execute("""
+    delete from driver
+                  where driver_id=%s
+""",(id))
+      conn.commit()
+      cur.close()
+      conn.close()
+   except Exception as e:
+        return jsonify({"message":f"an error occurred {e}"})  
+   else:
+        return jsonify({"message":"object delete"}),201
+
+
+                  
+                    
 
 
         
