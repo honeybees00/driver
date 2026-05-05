@@ -7,7 +7,7 @@ from routes.routes import route
 init_db()
 app=Flask(__name__)
 # establishs the end points for the api your making
-app.register_blueprint(drivers,url_prefix="/drivers")
+app.register_blueprint(driver,url_prefix="/driver")
 app.register_blueprint(packages,url_prefix="/packages")
 app.register_blueprint(route,url_prefix="/routes")
 app.register_blueprint(vehicle,url_prefix="/vehicle")

@@ -1,10 +1,10 @@
 from flask import jsonify,request,Blueprint
 from psycopg2.extras import RealDictCursor
 from database import get_connection
-drivers=Blueprint("drivers",__name__)
+driver=Blueprint("driver",__name__)
 # Get crud opperations below
-@drivers.route("/")
-def get_drivers():
+@driver.route("/")
+def get_driver():
     try:
         conn=get_connection()
         cur=conn.cursor(cursor_factory=RealDictCursor)
@@ -23,7 +23,7 @@ def get_drivers():
  # post crud opperations  
 # letting the program know this is a post method you have to say post method
 
-@drivers.route("/",methods=["POST"])
+@driver.route("/",methods=["POST"])
 
 def create_driver():
     try:
