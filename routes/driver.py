@@ -47,7 +47,7 @@ def create_driver():
     else:
             return jsonify({"message":"object created"}),201
     # the Put (upate, or change a record, row)
-@drivers.route("/<int:id>",methods=["PUT"]) 
+@driver.route("/<int:id>",methods=["PUT"]) 
 def update_driver(id):
      try:
         conn=get_connection()
@@ -67,7 +67,7 @@ def update_driver(id):
      else:
             return jsonify({"message":"object updated"}),201
     #  delete opperation
-@drivers.route("/<int:id>",methods=["Delete"])
+@driver.route("/<int:id>",methods=["Delete"])
 def delete_driver(id):
     try:
         conn=get_connection()
@@ -84,7 +84,7 @@ def delete_driver(id):
     else:
      return jsonify({"message":"object updated"}),201
      #  delete opperation
-@drivers.route("/<int:id>",methods=["Delete"])
+@driver.route("/<int:id>",methods=["Delete"])
 def delete_driver(id):
     
    try:

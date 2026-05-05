@@ -23,16 +23,14 @@ def init_db():
     driver_id serial Primary Key,
     name varchar (50) not null,
    license_type varchar (50) not null
+ 
                              );
  create table if not exists route(
    route_id serial Primary key,
    service_zone Varchar (50) not null,
     date date
+ foreign key (driver_id) references driver(driver_id)
                 );
-create table if not exists driver(
-    driver_id int ,
-    foreign key (driver_id) references driver(driver_id)                            
-                                                  ); 
  create table if not exists vehicle(
     vehicle_id serial Primary key,
       license_plate varchar (50) not null,
