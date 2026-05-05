@@ -86,30 +86,3 @@ def delete_vehicle(id):
     else:
      return jsonify({"message":"object updated"}),201
      #  delete opperation
-@vehicle.route("/<int:id>",methods=["Delete"])
-def delete_vehicle(id):
-    
-   try:
-      conn= get_connection()
-      cur=conn.cursor()
-      cur.execute("""
-    delete from vehicle
-                  where vehicle_id=%s
-""",(id))
-      conn.commit()
-      cur.close()
-      conn.close()
-   except Exception as e:
-        return jsonify({"message":f"an error occurred {e}"})  
-   else:
-        return jsonify({"message":"object delete"}),201
-
-
-                  
-                    
-
-
-        
-
-  
-

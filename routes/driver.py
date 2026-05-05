@@ -1,6 +1,7 @@
 from flask import jsonify,request,Blueprint
 from psycopg2.extras import RealDictCursor
 from database import get_connection
+
 driver=Blueprint("driver",__name__)
 # Get crud opperations below
 @driver.route("/")
@@ -84,30 +85,3 @@ def delete_driver(id):
     else:
      return jsonify({"message":"object updated"}),201
      #  delete opperation
-@driver.route("/<int:id>",methods=["Delete"])
-def delete_driver(id):
-    
-   try:
-      conn= get_connection()
-      cur=conn.cursor()
-      cur.execute("""
-    delete from driver
-                  where driver_id=%s
-""",(id))
-      conn.commit()
-      cur.close()
-      conn.close()
-   except Exception as e:
-        return jsonify({"message":f"an error occurred {e}"})  
-   else:
-        return jsonify({"message":"object delete"}),201
-
-
-                  
-                    
-
-
-        
-
-  
-
