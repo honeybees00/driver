@@ -69,7 +69,7 @@ def update_route(id):
      else:
             return jsonify({"message":"object updated"}),201
     #  delete opperation
-@route.route("/<int:id>",methods=["Delete"])
+@route.route("/<int:id>",methods=["DELETE"])
 def delete_route(id):
     try:
         conn=get_connection()

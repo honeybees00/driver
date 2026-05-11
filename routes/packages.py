@@ -67,7 +67,7 @@ def update_packages(id):
      else:
             return jsonify({"message":"object updated"}),201
     #  delete opperation
-@packages.route("/<int:id>",methods=["Delete"])
+@packages.route("/<int:id>",methods=["DELETE"])
 def delete_package(id):
     try:
         conn=get_connection()

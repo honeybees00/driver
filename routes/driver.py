@@ -68,7 +68,7 @@ def update_driver(id):
      else:
             return jsonify({"message":"object updated"}),201
     #  delete opperation
-@driver.route("/<int:id>",methods=["Delete"])
+@driver.route("/<int:id>",methods=["DELETE"])
 def delete_driver(id):
     try:
         conn=get_connection()

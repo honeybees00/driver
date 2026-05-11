@@ -69,7 +69,7 @@ def update_vehicle(id):
      else:
             return jsonify({"message":"object updated"}),201
     #  delete opperation
-@vehicle.route("/<int:id>",methods=["Delete"])
+@vehicle.route("/<int:id>",methods=["DELETE"])
 def delete_vehicle(id):
     try:
         conn=get_connection()
