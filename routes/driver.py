@@ -75,8 +75,8 @@ def delete_driver(id):
         cur=conn.cursor()
         cur.execute("""
         delete from driver
-         where driver_id=%s
-                    """)
+         where driver_id=%s,
+                    """ ,(id,))
         conn.commit()
         cur.close()
         conn.close()

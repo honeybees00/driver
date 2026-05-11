@@ -1,7 +1,7 @@
 from flask import jsonify,request,Blueprint
 from psycopg2.extras import RealDictCursor
 from database import get_connection
-packages=Blueprint("packsges",__name__)
+packages=Blueprint("packsges", __name__)
 # Get crud opperations below
 @packages.route("/")
 def get_packages():

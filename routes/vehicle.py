@@ -60,7 +60,7 @@ def update_vehicle(id):
                     driver_id=%s
                       where vehicle_id=%s
                      
-""",(data["date"],data["service_zone"],data["driver_id"],id))
+""",(data["model"],data["service_zone"],data["driver_id"],id))
         conn.commit()
         cur.close()
         conn.close()
@@ -77,7 +77,7 @@ def delete_vehicle(id):
         cur.execute("""
         delete from vehicle
          where vehicle_id=%s
-                    """)
+                    """,(id,))
         conn.commit()
         cur.close()
         conn.close()
