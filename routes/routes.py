@@ -77,7 +77,7 @@ def delete_route(id):
         cur.execute("""
         delete from route
          where route_id=%s
-                    """)
+                    """,(id,))
         conn.commit()
         cur.close()
         conn.close()

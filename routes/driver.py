@@ -34,12 +34,12 @@ def create_driver():
     
         cur.execute("""
         insert into driver
-        (driver_id,name,license_type)
+        (name,license_type)
          values
                     (%s,%s,%s)           
     
         
-                    """,(data["driver_id"],data["name"],data["license_type"]))
+                    """,(data["name"],data["license_type"]))
         conn.commit()
         cur.close()
         conn.close()

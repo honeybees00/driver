@@ -1,3 +1,4 @@
+
 import psycopg2
 import os 
 from dotenv import load_dotenv
@@ -55,6 +56,7 @@ def init_db():
             );
 
         """)
+        conn.commit()
         cur.close()
         conn.close()
         print(' database ready!')

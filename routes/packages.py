@@ -1,7 +1,7 @@
 from flask import jsonify,request,Blueprint
 from psycopg2.extras import RealDictCursor
 from database import get_connection
-packages=Blueprint("packsges", __name__)
+packages=Blueprint("packages", __name__)
 # Get crud opperations below
 @packages.route("/")
 def get_packages():
@@ -9,7 +9,7 @@ def get_packages():
      conn=get_connection()
      cur=conn.cursor(cursor_factory=RealDictCursor)
      cur.execute("""
-        select * from packages
+        select * from package
         
                     """)
      rows=cur.fetchall()
@@ -32,8 +32,8 @@ def create_packages():
     
       cur.execute("""
                 
-    insert into packages
-    (packages_id,weight,description,route_id)
+    insert into package
+    (weight,description,route_id)
         values
      (%s,%s,%s,%s)           
     
@@ -58,7 +58,7 @@ def update_packages(id):
                       description=%s,
                     route_id=%s
                       where package_id=%s
-""",(data["package_id"],data["weight"],data["description"],data["route_id"],id))
+"""(data["weight"],data["description"],data["route_id"],id))
         conn.commit()
         cur.close()
         conn.close()
@@ -75,7 +75,7 @@ def delete_package(id):
         cur.execute("""
     delete from package
     where package_id=%s
-                      """,(id))
+                      """,(id,))
         conn.commit()
         cur.close()
         conn.close()
