@@ -33,12 +33,12 @@ def create_vehicle():
     
         cur.execute("""
         insert into vehicle
-        (model,licence_plate,driver_id)
+        (model,license_plate,driver_id)
          values
-                    (%s,%s,%s,%s)           
-    
-        
-                    """,(data["vehicle_id"],data["model"],data["license_plate"],data["driver_id"]))
+                    (%s,%s,%s)
+
+
+                    """,(data["model"],data["license_plate"],data["driver_id"]))
         conn.commit()
         cur.close()
         conn.close()

@@ -33,12 +33,12 @@ def create_route():
     
         cur.execute("""
         insert into route
-        (route_id,date,service_zone,driver_id)
+        (date,service_zone,driver_id)
          values
-                    (%s,%s,%s,%s)           
-    
-        
-                    """,(data["route_id"],data["date"],data["service_zone"],data["driver_id"]))
+                    (%s,%s,%s)
+
+
+                    """,(data["date"],data["service_zone"],data["driver_id"]))
         conn.commit()
         cur.close()
         conn.close()

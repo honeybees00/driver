@@ -36,9 +36,9 @@ def create_driver():
         insert into driver
         (name,license_type)
          values
-                    (%s,%s,%s)           
-    
-        
+                    (%s,%s)
+
+
                     """,(data["name"],data["license_type"]))
         conn.commit()
         cur.close()
@@ -75,7 +75,7 @@ def delete_driver(id):
         cur=conn.cursor()
         cur.execute("""
         delete from driver
-         where driver_id=%s,
+         where driver_id=%s
                     """ ,(id,))
         conn.commit()
         cur.close()
