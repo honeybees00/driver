@@ -1,88 +1,76 @@
-from flask import jsonify,request,Blueprint
+from flask import jsonify, request, Blueprint
 from psycopg2.extras import RealDictCursor
 from database import get_connection
-vehicle=Blueprint("vehicle",__name__)
-# Get crud opperations below
+
+vehicle = Blueprint("vehicle", __name__)
+
 @vehicle.route("/")
 def get_vehicle():
+    conn = cur = None
     try:
-        conn=get_connection()
-        cur=conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("""
-        select * from vehicle
-        
-                    """)
-        rows=cur.fetchall()
-        cur.close()
-        conn.close()
-    except Exception as e:
-        return jsonify({"message":f"an error occurred {e}"})  
-    else:
+        conn = get_connection()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT * FROM vehicle")
+        rows = cur.fetchall()
         return jsonify(rows)
-    
- # post crud opperations  
-# letting the program know this is a post method you have to say post method
+    except Exception as e:
+        return jsonify({"message": f"an error occurred {e}"}), 500
+    finally:
+        if cur: cur.close()
+        if conn: conn.close()
 
-@vehicle.route("/",methods=["POST"])
-
+@vehicle.route("/", methods=["POST"])
 def create_vehicle():
+    conn = cur = None
     try:
-        conn=get_connection()
-        cur=conn.cursor()
-        data=request.get_json()
-    
-        cur.execute("""
-        insert into vehicle
-        (model,license_plate,driver_id)
-         values
-                    (%s,%s,%s)
-
-
-                    """,(data["model"],data["license_plate"],data["driver_id"]))
+        conn = get_connection()
+        cur = conn.cursor()
+        data = request.get_json()
+        cur.execute(
+            "INSERT INTO vehicle (model, license_plate, driver_id) VALUES (%s, %s, %s)",
+            (data["model"], data["license_plate"], data["driver_id"])
+        )
         conn.commit()
-        cur.close()
-        conn.close()
+        return jsonify({"message": "object created"}), 201
     except Exception as e:
-            return jsonify({"message":f"an error occurred {e}"})  
-    else:
-            return jsonify({"message":"object created"}),201
-    # the Put (upate, or change a record, row)
-@vehicle.route("/<int:id>",methods=["PUT"]) 
+        if conn: conn.rollback()
+        return jsonify({"message": f"an error occurred {e}"}), 500
+    finally:
+        if cur: cur.close()
+        if conn: conn.close()
+
+@vehicle.route("/<int:id>", methods=["PUT"])
 def update_vehicle(id):
-     try:
-        conn=get_connection()
-        cur=conn.cursor()
-        data=request.get_json()
-        cur.execute("""
-            update vehicle
-                      set model=%s,
-                      license_plate=%s,
-                    driver_id=%s
-                      where vehicle_id=%s
-                     
-""",(data["model"],data["license_plate"],data["driver_id"],id))
-        conn.commit()
-        cur.close()
-        conn.close()
-     except Exception as e:
-        return jsonify({"message":f"an error occurred {e}"})  
-     else:
-            return jsonify({"message":"object updated"}),201
-    #  delete opperation
-@vehicle.route("/<int:id>",methods=["DELETE"])
-def delete_vehicle(id):
+    conn = cur = None
     try:
-        conn=get_connection()
-        cur=conn.cursor()
-        cur.execute("""
-        delete from vehicle
-         where vehicle_id=%s
-                    """,(id,))
+        conn = get_connection()
+        cur = conn.cursor()
+        data = request.get_json()
+        cur.execute(
+            "UPDATE vehicle SET model=%s, license_plate=%s, driver_id=%s WHERE vehicle_id=%s",
+            (data["model"], data["license_plate"], data["driver_id"], id)
+        )
         conn.commit()
-        cur.close()
-        conn.close()
+        return jsonify({"message": "object updated"}), 200
     except Exception as e:
-     return jsonify({"message":f"an error occurred {e}"})  
-    else:
-     return jsonify({"message":"object updated"}),201
-     #  delete opperation
+        if conn: conn.rollback()
+        return jsonify({"message": f"an error occurred {e}"}), 500
+    finally:
+        if cur: cur.close()
+        if conn: conn.close()
+
+@vehicle.route("/<int:id>", methods=["DELETE"])
+def delete_vehicle(id):
+    conn = cur = None
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute("DELETE FROM vehicle WHERE vehicle_id=%s", (id,))
+        conn.commit()
+        return jsonify({"message": "object deleted"}), 200
+    except Exception as e:
+        if conn: conn.rollback()
+        return jsonify({"message": f"an error occurred {e}"}), 500
+    finally:
+        if cur: cur.close()
+        if conn: conn.close()
