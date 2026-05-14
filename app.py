@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, send_from_directory, request
+from flask import Flask, jsonify, render_template, send_from_directory, request
 from flask_cors import CORS
 from database import init_db
 from routes.driver import driver
@@ -8,7 +8,7 @@ from routes.vehicle import vehicle
 from routes.routes import route
 
 init_db()
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="", static_folder="static")
 CORS(app, origins="*", supports_credentials=False)
 
 # API blueprints
@@ -39,14 +39,11 @@ def handle_options(**kwargs):
 def home():
     return jsonify({"message": "server online"})
 
-# Serve the React build for all non-API routes
+# Serve the React app for all non-API routes
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve_react(path):
-    dist = os.path.join(os.path.abspath(os.path.dirname(__file__)), "driver-frontend", "dist")
-    if path and os.path.exists(os.path.join(dist, path)):
-        return send_from_directory(dist, path)
-    return send_from_directory(dist, "index.html")
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(debug=False)

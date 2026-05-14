@@ -1,0 +1,25 @@
+info:
+  name: package-post
+  type: http
+
+http:
+  method: POST
+  url: https://christina.pathway4.click/packages/
+  auth: inherit
+  body:
+    mode: json
+    json: |
+      {
+        "weight": 5,
+        "description": "Electronics - fragile",
+        "route_id": 1
+      }
+
+headers:
+  Content-Type: application/json
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
