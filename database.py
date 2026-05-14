@@ -56,6 +56,12 @@ def init_db():
             );
 
         """)
+
+        cur.execute("""
+            GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO christina;
+            GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO christina;
+        """)
+
         conn.commit()
         cur.close()
         conn.close()
